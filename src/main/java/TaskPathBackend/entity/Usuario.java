@@ -1,13 +1,14 @@
 package TaskPathBackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +28,8 @@ public class Usuario {
     private String telefono;
     private String direccion;
     private String estado;
-    private LocalDateTime fechaNacimiento;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaNacimiento;
     private Long idCargo;
     private Long idEstadoCivil;
     private Long idGenero;

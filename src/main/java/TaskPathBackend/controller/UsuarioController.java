@@ -2,7 +2,10 @@ package TaskPathBackend.controller;
 
 import TaskPathBackend.dto.UsuarioDTO;
 import TaskPathBackend.service.UsuarioService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,11 +19,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     // Crear usuario con posible imagen
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UsuarioDTO crearUsuario(
-            @RequestPart(value = "usuario", required = true) UsuarioDTO usuarioDTO,
+            @RequestParam("usuario") String usuarioJson,
             @RequestPart(value = "file", required = false) MultipartFile file
-    ) {
+    ) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        UsuarioDTO usuarioDTO = mapper.readValue(usuarioJson, UsuarioDTO.class);
         return usuarioService.crearUsuario(usuarioDTO, file);
     }
 
