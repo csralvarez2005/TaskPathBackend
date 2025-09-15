@@ -81,9 +81,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Page<UsuarioDTO> listarUsuarios(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return usuarioRepository.findAll(pageable)
-                .map(usuarioMapper::toDTO);
+        Pageable pageable = PageRequest.of(
+                page < 0 ? 0 : page,           // evita valores negativos
+                size <= 0 ? 10 : size          // tamaño por defecto
+        );
+        Page<Usuario> usuariosPage = usuarioRepository.findAll(pageable);
+        return usuariosPage.map(usuarioMapper::toDTO);
     }
 
     @Override

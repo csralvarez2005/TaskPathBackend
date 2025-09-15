@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +31,12 @@ public class UsuarioController {
     // Listar todos los usuarios
 // Listar usuarios con paginación
     @GetMapping
-    public Page<UsuarioDTO> listarUsuarios(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+    public ResponseEntity<Page<UsuarioDTO>> listarUsuarios(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        return usuarioService.listarUsuarios(page, size);
+        Page<UsuarioDTO> usuarios = usuarioService.listarUsuarios(page, size);
+        return ResponseEntity.ok(usuarios);
     }
 
     // Buscar usuario por ID
