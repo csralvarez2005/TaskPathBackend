@@ -21,11 +21,9 @@ public class UsuarioController {
     // Crear usuario con posible imagen
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UsuarioDTO crearUsuario(
-            @RequestParam("usuario") String usuarioJson,
+            @RequestPart("usuario") UsuarioDTO usuarioDTO,
             @RequestPart(value = "file", required = false) MultipartFile file
-    ) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        UsuarioDTO usuarioDTO = mapper.readValue(usuarioJson, UsuarioDTO.class);
+    ) {
         return usuarioService.crearUsuario(usuarioDTO, file);
     }
 
