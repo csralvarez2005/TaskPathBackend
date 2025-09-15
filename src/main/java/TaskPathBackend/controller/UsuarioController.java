@@ -5,6 +5,7 @@ import TaskPathBackend.service.UsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +28,13 @@ public class UsuarioController {
     }
 
     // Listar todos los usuarios
+// Listar usuarios con paginación
     @GetMapping
-    public List<UsuarioDTO> listarUsuarios() {
-        return usuarioService.listarUsuarios();
+    public Page<UsuarioDTO> listarUsuarios(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return usuarioService.listarUsuarios(page, size);
     }
 
     // Buscar usuario por ID
