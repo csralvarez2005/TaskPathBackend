@@ -18,8 +18,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    // Crear usuario con posible imagen
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public UsuarioDTO crearUsuario(
             @RequestPart("usuario") UsuarioDTO usuarioDTO,
             @RequestPart(value = "file", required = false) MultipartFile file
