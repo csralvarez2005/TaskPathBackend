@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setId(sequenceGenerator.generateSequence("usuarios_sequence"));
         }
 
+        // Estado por defecto
+        usuario.setEstado("ACTIVO");
+
+        // Fecha de creación automática
+        if (usuario.getFechaCreacion() == null) {
+            usuario.setFechaCreacion(new Date());
+        }
+
         // Manejo de foto (opcional)
         if (file != null && !file.isEmpty()) {
             try {
@@ -66,10 +75,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 Map<String, Object> result = cloudinaryService.uploadFile(file);
                 usuario.setIdFoto((String) result.get("public_id"));
                 usuario.setNombreArchivoFoto((String) result.get("secure_url"));
-                log.info("✅ Imagen subida correctamente a Cloudinary. Public ID: {}", usuario.getIdFoto());
+                log.info("Imagen subida correctamente a Cloudinary. Public ID: {}", usuario.getIdFoto());
             } catch (Exception e) {
-                log.error("⚠️ Error al subir imagen a Cloudinary: {}", e.getMessage(), e);
-                // Se guarda el usuario sin imagen
+                log.error("Error al subir imagen a Cloudinary: {}", e.getMessage(), e);
                 usuario.setIdFoto(null);
                 usuario.setNombreArchivoFoto(null);
             }
@@ -129,7 +137,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             return usuarioMapper.toDTO(actualizado);
 
         } catch (Exception e) {
-            log.error("⚠️ Error al subir nueva imagen para usuario {}: {}", id, e.getMessage(), e);
+            log.error("Error al subir nueva imagen para usuario {}: {}", id, e.getMessage(), e);
             throw new RuntimeException("Error al subir imagen", e);
         }
     }
@@ -148,7 +156,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 Usuario actualizado = usuarioRepository.save(usuario);
                 return usuarioMapper.toDTO(actualizado);
             } catch (Exception e) {
-                log.error("⚠️ Error al eliminar imagen del usuario {}: {}", id, e.getMessage(), e);
+                log.error("Error al eliminar imagen del usuario {}: {}", id, e.getMessage(), e);
                 throw new RuntimeException("Error al eliminar imagen", e);
             }
         } else {

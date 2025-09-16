@@ -12,20 +12,17 @@ import java.util.Date;
 @AllArgsConstructor
 public class UsuarioDTO {
     private Long id;
-    private String nombre;
     private String apellidoFuncionario;
     private String nombreFuncionario;
     private String email;
     private String rol;
     private String password;
     private String celular;
-    private String telefono;
     private String direccion;
-    private String estado;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date fechaCreacion;
     private Long idCargo;
     private Long idEstadoCivil;
     private Long idGenero;
