@@ -2,6 +2,7 @@ package TaskPathBackend.controller;
 
 
 import TaskPathBackend.dto.ListaValorDTO;
+import TaskPathBackend.entity.ListaValor;
 import TaskPathBackend.service.ListaValorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,12 @@ public class ListaValorController {
     public ResponseEntity<List<ListaValorDTO>> crearListaValores(@RequestBody List<ListaValorDTO> dtos) {
         List<ListaValorDTO> creados = listaValorService.crearListaValores(dtos);
         return ResponseEntity.ok(creados);
+    }
+
+    // 🔹 Nuevo endpoint para obtener tipos de identificación
+    @GetMapping("/tipos-identificacion")
+    public ResponseEntity<List<ListaValor>> obtenerTiposIdentificacion() {
+        List<ListaValor> lista = listaValorService.obtenerTiposIdentificacion();
+        return ResponseEntity.ok(lista);
     }
 }

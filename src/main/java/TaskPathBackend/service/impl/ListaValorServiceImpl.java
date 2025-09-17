@@ -52,4 +52,9 @@ public class ListaValorServiceImpl implements ListaValorService {
                 .map(listaValorMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ListaValor> obtenerTiposIdentificacion() {
+        return listaValorRepository.findByCategoria("TIPO_IDENTIFICACION");
+    }
 }
