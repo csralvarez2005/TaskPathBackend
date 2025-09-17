@@ -1,9 +1,11 @@
 package TaskPathBackend.service.impl;
 
 import TaskPathBackend.dto.UsuarioDTO;
+import TaskPathBackend.entity.Cargo;
 import TaskPathBackend.entity.Usuario;
 import TaskPathBackend.exception.UsuarioAlreadyExistsException;
 import TaskPathBackend.mapper.UsuarioMapper;
+import TaskPathBackend.repository.CargoRepository;
 import TaskPathBackend.repository.UsuarioRepository;
 import TaskPathBackend.service.CloudinaryService;
 import TaskPathBackend.service.UsuarioService;
@@ -28,23 +30,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final SequenceGeneratorService sequenceGenerator;
     private final UsuarioMapper usuarioMapper;
     private final CloudinaryService cloudinaryService;
+    private final CargoRepository cargoRepository;
 
     @Autowired
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
             SequenceGeneratorService sequenceGenerator,
             UsuarioMapper usuarioMapper,
-            CloudinaryService cloudinaryService
+            CloudinaryService cloudinaryService,
+            CargoRepository cargoRepository
     ) {
         this.usuarioRepository = usuarioRepository;
         this.sequenceGenerator = sequenceGenerator;
         this.usuarioMapper = usuarioMapper;
         this.cloudinaryService = cloudinaryService;
+        this.cargoRepository = cargoRepository;
     }
 
-    /**
-     * Crear usuario con posibilidad de subir imagen opcional
-     */
     @Override
     public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO, MultipartFile file) {
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
@@ -67,6 +69,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario.getFechaCreacion() == null) {
             usuario.setFechaCreacion(new Date());
         }
+
+        // 🔹 Forzar cargo por defecto (id = 10007)
+        Cargo cargoPorDefecto = cargoRepository.findById(10007L)
+                .orElseThrow(() -> new RuntimeException("Cargo con id 10007 no encontrado"));
+        usuario.setCargo(cargoPorDefecto);
+
+        // Username y password = identificación
+        usuario.setUsername(usuario.getIdentificacion());
+        usuario.setPassword(usuario.getIdentificacion());
 
         // Manejo de foto (opcional)
         if (file != null && !file.isEmpty()) {
