@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lista-valor")
 public class ListaValorController {
@@ -28,5 +30,11 @@ public class ListaValorController {
     public ResponseEntity<String> eliminarTodos() {
         listaValorService.eliminarTodos();
         return ResponseEntity.ok("Todos los registros de lista_valor fueron eliminados.");
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<ListaValorDTO>> crearListaValores(@RequestBody List<ListaValorDTO> dtos) {
+        List<ListaValorDTO> creados = listaValorService.crearListaValores(dtos);
+        return ResponseEntity.ok(creados);
     }
 }

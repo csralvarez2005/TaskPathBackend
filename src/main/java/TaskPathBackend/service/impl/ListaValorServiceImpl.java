@@ -9,6 +9,9 @@ import TaskPathBackend.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ListaValorServiceImpl implements ListaValorService {
     private final ListaValorRepository listaValorRepository;
@@ -26,21 +29,27 @@ public class ListaValorServiceImpl implements ListaValorService {
 
     @Override
     public ListaValorDTO crearListaValor(ListaValorDTO dto) {
-        // Convertir DTO a Entity
         ListaValor entity = listaValorMapper.toEntity(dto);
-
-        // Generar ID secuencial
         entity.setCodigo(sequenceGeneratorService.generateSequence(ListaValor.class.getSimpleName()));
-
-        // Guardar en Mongo
         ListaValor saved = listaValorRepository.save(entity);
-
-        // Devolver DTO
         return listaValorMapper.toDTO(saved);
     }
 
     @Override
     public void eliminarTodos() {
         listaValorRepository.deleteAll();
+    }
+
+    @Override
+    public List<ListaValorDTO> crearListaValores(List<ListaValorDTO> dtos) {
+        List<ListaValor> entidades = dtos.stream()
+                .map(listaValorMapper::toEntity)
+                .collect(Collectors.toList());
+
+        List<ListaValor> guardados = listaValorRepository.saveAll(entidades);
+
+        return guardados.stream()
+                .map(listaValorMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
