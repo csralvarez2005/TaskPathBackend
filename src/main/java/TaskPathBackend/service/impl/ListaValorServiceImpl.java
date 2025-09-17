@@ -38,4 +38,9 @@ public class ListaValorServiceImpl implements ListaValorService {
         // Devolver DTO
         return listaValorMapper.toDTO(saved);
     }
+
+    @Override
+    public void eliminarTodos() {
+        listaValorRepository.deleteAll();
+    }
 }

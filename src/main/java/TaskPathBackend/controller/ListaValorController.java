@@ -23,4 +23,10 @@ public class ListaValorController {
         ListaValorDTO creado = listaValorService.crearListaValor(dto);
         return ResponseEntity.ok(creado);
     }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<String> eliminarTodos() {
+        listaValorService.eliminarTodos();
+        return ResponseEntity.ok("Todos los registros de lista_valor fueron eliminados.");
+    }
 }
