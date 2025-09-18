@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -173,6 +174,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             throw new RuntimeException("El usuario no tiene una foto asociada");
         }
+    }
+
+    @Override
+    public List<UsuarioDTO> crearUsuarios(List<UsuarioDTO> usuarios) {
+        return usuarios.stream()
+                .map(usuario -> crearUsuario(usuario, null)) // reusamos tu método individual
+                .collect(Collectors.toList());
     }
 
     /**

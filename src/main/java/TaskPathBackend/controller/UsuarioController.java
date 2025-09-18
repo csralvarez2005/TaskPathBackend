@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -67,5 +68,16 @@ public class UsuarioController {
     @DeleteMapping("/{id}/foto")
     public UsuarioDTO eliminarFoto(@PathVariable Long id) {
         return usuarioService.eliminarFoto(id);
+    }
+
+    @PostMapping(
+            value = "/bulk",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public List<UsuarioDTO> crearUsuarios(@RequestBody List<UsuarioDTO> usuarios) {
+        return usuarios.stream()
+                .map(usuario -> usuarioService.crearUsuario(usuario, null))
+                .collect(Collectors.toList());
     }
 }

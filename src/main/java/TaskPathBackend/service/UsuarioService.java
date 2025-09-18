@@ -14,4 +14,5 @@ public interface UsuarioService {
     void eliminarUsuario(Long id);
     UsuarioDTO subirFoto(Long id, MultipartFile file);
     UsuarioDTO eliminarFoto(Long id);
+    List<UsuarioDTO> crearUsuarios(List<UsuarioDTO> usuarios);
 }
