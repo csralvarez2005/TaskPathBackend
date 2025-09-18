@@ -13,10 +13,12 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // permite todos los endpoints
-                        .allowedOrigins("*") // ⚠️ permite cualquier origen (para pruebas)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // métodos permitidos
-                        .allowedHeaders("*");
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200",
+                                "https://taskpathfrontend.onrender.com") // 🔹 ajusta con la URL real de tu Angular en producción
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true); // si manejas sesión o cookies
             }
         };
     }
