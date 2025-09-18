@@ -2,7 +2,9 @@ package TaskPathBackend.controller;
 
 import TaskPathBackend.entity.Cargo;
 import TaskPathBackend.service.CargoService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -16,9 +18,8 @@ public class CargoController {
         this.cargoService = cargoService;
     }
 
-    // GET /cargos → listar todos
     @GetMapping
-    public List<Cargo> listarTodos() {
+    public List<Cargo> listarCargos() {
         return cargoService.listarTodos();
     }
 }

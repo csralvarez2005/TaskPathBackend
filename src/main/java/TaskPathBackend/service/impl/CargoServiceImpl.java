@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // 🔹 Esto hace que Spring lo registre como bean
+@Service
 public class CargoServiceImpl implements CargoService {
+
     private final CargoRepository cargoRepository;
 
     public CargoServiceImpl(CargoRepository cargoRepository) {
