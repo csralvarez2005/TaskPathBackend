@@ -14,11 +14,13 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200",
-                                "https://taskpathfrontend.onrender.com") // 🔹 ajusta con la URL real de tu Angular en producción
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "https://taskpathbackend.onrender.com"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true); // si manejas sesión o cookies
+                        .allowCredentials(true);
             }
         };
     }
