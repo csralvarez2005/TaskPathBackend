@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargos")
-@CrossOrigin(origins = "*") // opcional: para que Postman/Frontend pueda acceder
 public class CargoController {
 
     private final CargoService cargoService;

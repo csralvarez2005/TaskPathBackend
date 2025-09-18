@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200", "https://taskpathbackend.onrender.com"})
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
