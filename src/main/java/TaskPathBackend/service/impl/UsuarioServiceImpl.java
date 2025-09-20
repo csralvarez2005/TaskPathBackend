@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -102,8 +103,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Page<UsuarioDTO> listarUsuarios(int page, int size) {
         Pageable pageable = PageRequest.of(
-                page < 0 ? 0 : page,           // evita valores negativos
-                size <= 0 ? 10 : size          // tamaño por defecto
+                page < 0 ? 0 : page,
+                size <= 0 ? 10 : size,
+                Sort.by("id").descending()
         );
         Page<Usuario> usuariosPage = usuarioRepository.findAll(pageable);
         return usuariosPage.map(usuarioMapper::toDTO);
