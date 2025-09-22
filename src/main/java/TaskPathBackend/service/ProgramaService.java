@@ -11,4 +11,5 @@ public interface ProgramaService {
     ProgramaDTO actualizarPrograma(Long id, ProgramaDTO dto);
     void eliminarPrograma(Long id);
     List<ProgramaDTO> crearProgramas(List<ProgramaDTO> dtos);
+    List<String> obtenerNombresProgramas(Long idNivelFormacion, Long idUniversidad, String estado);
 }

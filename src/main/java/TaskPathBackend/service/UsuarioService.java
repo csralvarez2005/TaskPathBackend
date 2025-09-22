@@ -15,4 +15,6 @@ public interface UsuarioService {
     UsuarioDTO subirFoto(Long id, MultipartFile file);
     UsuarioDTO eliminarFoto(Long id);
     List<UsuarioDTO> crearUsuarios(List<UsuarioDTO> usuarios);
+    UsuarioDTO actualizarUsuario(Long id, UsuarioDTO usuarioDTO, MultipartFile file);
+    byte[] obtenerFoto(Long id);
 }

@@ -43,4 +43,12 @@ public class ProgramaController {
     public void eliminar(@PathVariable Long id) {
         programaService.eliminarPrograma(id);
     }
+
+    @GetMapping("/nombres")
+    public List<String> obtenerNombres(
+            @RequestParam Long idNivelFormacion,
+            @RequestParam Long idUniversidad,
+            @RequestParam String estado) {
+        return programaService.obtenerNombresProgramas(idNivelFormacion, idUniversidad, estado);
+    }
 }

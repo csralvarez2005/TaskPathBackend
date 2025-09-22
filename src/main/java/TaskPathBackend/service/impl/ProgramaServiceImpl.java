@@ -85,4 +85,12 @@ public class ProgramaServiceImpl implements ProgramaService {
                 .map(programaMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> obtenerNombresProgramas(Long idNivelFormacion, Long idUniversidad, String estado) {
+        return programaRepository.findNombresByFiltros(idNivelFormacion, idUniversidad, estado)
+                .stream()
+                .map(p -> p.getNombre())
+                .toList();
+    }
 }

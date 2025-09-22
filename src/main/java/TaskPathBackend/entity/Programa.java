@@ -14,15 +14,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Programa {
 
     @Id
-    private Long id;                  // PK
-    private String codigoPrograma;    // varchar(255)
-    private String estado;            // varchar(255)
-    private Long idFacultad;          // numeric(19)
-    private Long idJornada;           // numeric(19)
-    private String nombre;            // varchar(255)
-    private Long idNivelFormacion;    // numeric(19)
-    private Long idUniversidad;       // numeric(19)
-    private String tipoPrograma;      // varchar(255)
-
+    private Long id;
+    private String codigoPrograma;
+    private String estado;
+    private Long idFacultad;
+    private Long idJornada;
+    private String nombre;
+    private Long idNivelFormacion;
+    private Long idUniversidad;
+    private String tipoPrograma;
     public static final String SEQUENCE_NAME = "programas_sequence";
 }
